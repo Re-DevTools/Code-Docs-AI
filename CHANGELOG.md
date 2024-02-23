@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (2024-02-24)
+
+- fix: set marketplace gallery banner to light mode
+
 ## v0.1.0 (2024-02-23)
 
 - feat: add first version of docs ai

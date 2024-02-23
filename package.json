@@ -2,7 +2,7 @@
   "name": "docs-ai",
   "displayName": "Docs AI",
   "description": "GPT-4-powered VS Code extension to generate Python code comments",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "re-devtools",
   "engines": {
     "vscode": "^1.81.0"
@@ -20,7 +20,7 @@
   "icon": "media/docs_ai_icon_256.png",
   "galleryBanner": {
     "color": "#FFD700",
-    "theme": "dark"
+    "theme": "light"
   },
   "bugs": {
     "url": "https://github.com/Re-DevTools/Docs-AI/issues",
