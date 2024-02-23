@@ -1,0 +1,98 @@
+{
+  "name": "docs-ai",
+  "displayName": "Docs AI",
+  "description": "GPT-4-powered VS Code extension to generate Python code comments",
+  "version": "0.1.0",
+  "publisher": "re-devtools",
+  "engines": {
+    "vscode": "^1.81.0"
+  },
+  "license": "MIT",
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "documentation",
+    "gpt",
+    "comment",
+    "generator"
+  ],
+  "icon": "media/docs_ai_icon_256.png",
+  "galleryBanner": {
+    "color": "#FFD700",
+    "theme": "dark"
+  },
+  "bugs": {
+    "url": "https://github.com/Re-DevTools/Docs-AI/issues",
+    "email": "contact.redevtools@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Re-DevTools/Docs-AI"
+  },
+  "homepage": "https://github.com/Re-DevTools/Docs-AI",
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": [
+      {
+        "title": "Docs AI",
+        "properties": {
+          "docs-ai.apiKey": {
+            "type": "string",
+            "default": "",
+            "description": "Please enter your OpenAI API key for GPT-4. This key will be stored on your local machine only:"
+          }
+        }
+      }
+    ],
+    "activationEvents": [],
+    "commands": [
+      {
+        "command": "extension.generateComment",
+        "title": "Generate Comment with Docs AI 💬"
+      },
+      {
+        "command": "extension.openPromptEditor",
+        "title": "Edit Default Prompt ✍️"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "extension.generateComment",
+          "group": "1_comment@1"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "extension.openPromptEditor",
+          "group": "1_comment@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.2.5",
+    "@types/vscode": "^1.81.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "@vscode/test-electron": "^2.3.2",
+    "eslint": "^8.41.0",
+    "glob": "^8.1.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "openai": "^3.3.0"
+  }
+}
