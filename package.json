@@ -1,8 +1,8 @@
 {
-  "name": "docs-ai",
-  "displayName": "Docs AI",
+  "name": "code-docs-ai",
+  "displayName": "Code Docs AI",
   "description": "GPT-4-powered VS Code extension to generate Python code comments",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "re-devtools",
   "engines": {
     "vscode": "^1.81.0"
@@ -23,21 +23,21 @@
     "theme": "light"
   },
   "bugs": {
-    "url": "https://github.com/Re-DevTools/Docs-AI/issues",
+    "url": "https://github.com/Re-DevTools/Code-Docs-AI/issues",
     "email": "contact.redevtools@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Re-DevTools/Docs-AI"
+    "url": "https://github.com/Re-DevTools/Code-Docs-AI"
   },
-  "homepage": "https://github.com/Re-DevTools/Docs-AI",
+  "homepage": "https://github.com/Re-DevTools/Code-Docs-AI",
   "main": "./out/extension.js",
   "contributes": {
     "configuration": [
       {
-        "title": "Docs AI",
+        "title": "Code Docs AI",
         "properties": {
-          "docs-ai.apiKey": {
+          "code-docs-ai.apiKey": {
             "type": "string",
             "default": "",
             "description": "Please enter your OpenAI API key for GPT-4. This key will be stored on your local machine only:"
@@ -49,7 +49,7 @@
     "commands": [
       {
         "command": "extension.generateComment",
-        "title": "Generate Comment with Docs AI 💬"
+        "title": "Generate Comment with Code Docs AI 💬"
       },
       {
         "command": "extension.openPromptEditor",

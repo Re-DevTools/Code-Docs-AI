@@ -1,8 +1,8 @@
-# Contributing to Docs AI
+# Contributing to Code Docs AI
 
 First off, thanks for taking the time to contribute! 🎉
 
-The following is a set of guidelines for contributing to Docs AI. 
+The following is a set of guidelines for contributing to Code Docs AI.
 
 ## How Can I Contribute?
 
@@ -32,8 +32,8 @@ The following is a set of guidelines for contributing to Docs AI.
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Docs AI Code of Conduct](.github/CODE_OF_CONDUCT.md). 
-By participating, you are expected to uphold this code. 
+This project and everyone participating in it is governed by the [Code Docs AI Code of Conduct](.github/CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code.
 Please report unacceptable behavior to <contact.redevtools@gmail.com>.
 
 PS: Feel free to propose changes to this document in a pull request.

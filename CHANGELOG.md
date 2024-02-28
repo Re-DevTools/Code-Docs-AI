@@ -1,12 +1,16 @@
 # Changelog
 
-## 0.1.1 (2024-02-24)
+## v0.1.2 (2024-02-28)
+
+- fix: rename tool
+
+## v0.1.1 (2024-02-24)
 
 - fix: set marketplace gallery banner to light mode
 
 ## v0.1.0 (2024-02-23)
 
-- feat: add first version of docs ai
+- feat: add first version
 - Update feature_request.md
 - Update bug_report.md
 - Create pull_request_template.md
