@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
 
-const apiKey = vscode.workspace.getConfiguration().get('docs-ai.apiKey') as string;
+const apiKey = vscode.workspace.getConfiguration().get('code-docs-ai.apiKey') as string;
 
 let FEW_SHOTS = `For the following prompt take into account these 3 input/output terms, of how a comment should be written:
 Function:
