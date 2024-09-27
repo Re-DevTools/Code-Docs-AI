@@ -40,7 +40,7 @@
           "code-docs-ai.apiKey": {
             "type": "string",
             "default": "",
-            "description": "Please enter your OpenAI API key for GPT-4. This key will be stored on your local machine only:"
+            "description": "Please enter your OpenAI API key. This key will be stored on your local machine only:"
           },
           "code-docs-ai.gptModel": {
                 "type": "string",
