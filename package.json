@@ -41,7 +41,18 @@
             "type": "string",
             "default": "",
             "description": "Please enter your OpenAI API key for GPT-4. This key will be stored on your local machine only:"
-          }
+          },
+          "code-docs-ai.gptModel": {
+                "type": "string",
+                "default": "gpt-4",
+                "enum": [
+                    "gpt-4",
+                    "gpt-4-turbo",
+                    "gpt-4o-mini",
+                    "gpt-4o"
+                ],
+                "description": "Select the GPT model to use for generating comments."
+            }
         }
       }
     ],

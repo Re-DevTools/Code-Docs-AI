@@ -59,7 +59,7 @@ Comment:
 
 let DEFAULT_PROMPT = `Generate a comment for the following function:{FUNCTION_CONTENT}. 
 Adhere to the python comment syntax for multiline comments.
-Fill out this given template: 
+Fill out this given template and just return the comment, not the programming language: 
 Brief description of the function.
 
 :param name: Description
@@ -147,8 +147,11 @@ async function generateComment(selectedText: string, prompt?: string): Promise<s
             },
         });
 
+        const config = vscode.workspace.getConfiguration('code-docs-ai');
+        const gptModel = config.get<string>('gptModel') || 'gpt-4';
+
         const params = {
-            model: 'gpt-4',
+            model: gptModel,
             messages: [
                 {
                     role: 'system',
