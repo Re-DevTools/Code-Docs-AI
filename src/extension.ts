@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
+import { SettingsProvider, SettingItem } from './SettingsProvider';
+
+let settingsProvider: SettingsProvider;
 
 const apiKey = vscode.workspace.getConfiguration().get('code-docs-ai.apiKey') as string;
 
@@ -70,6 +73,27 @@ Brief description of the function.
 const originalEditor = vscode.window.activeTextEditor;
 
 export function activate(context: vscode.ExtensionContext) {
+    settingsProvider = new SettingsProvider();
+    vscode.window.registerTreeDataProvider('codeDocsAISettings', settingsProvider);
+
+    // Command to handle item selection
+    context.subscriptions.push(vscode.commands.registerCommand('extension.editSetting', async (item: SettingItem) => {
+        const config = vscode.workspace.getConfiguration('code-docs-ai');
+        if (item.label === 'API Key') {
+            const newApiKey = await vscode.window.showInputBox({ prompt: 'Enter your API Key', value: item.value === 'Enter your API key' ? '' : item.value });
+            if (newApiKey !== undefined) {
+                settingsProvider.updateSettings(newApiKey, undefined); // Update only the API Key
+            }
+        } else if (item.label === 'GPT Model') {
+            const newModel = await vscode.window.showQuickPick(["gpt-4",
+                    "gpt-4-turbo",
+                    "gpt-4o-mini",
+                    "gpt-4o"], { placeHolder: 'Select a GPT model', canPickMany: false });
+            if (newModel) {
+                settingsProvider.updateSettings(undefined, newModel); // Update only the model
+            }
+        }
+    }));
 
     let generateCommentCmd = vscode.commands.registerCommand('extension.generateComment', async () => {
         const editor = vscode.window.activeTextEditor;
@@ -149,7 +173,6 @@ async function generateComment(selectedText: string, prompt?: string): Promise<s
 
         const config = vscode.workspace.getConfiguration('code-docs-ai');
         const gptModel = config.get<string>('gptModel') || 'gpt-4';
-
         const params = {
             model: gptModel,
             messages: [

@@ -33,6 +33,14 @@
   "homepage": "https://github.com/Re-DevTools/Code-Docs-AI",
   "main": "./out/extension.js",
   "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "codeDocsAISettings",
+          "name": "Code Docs AI Settings"
+        }
+      ]
+    },
     "configuration": [
       {
         "title": "Code Docs AI",
