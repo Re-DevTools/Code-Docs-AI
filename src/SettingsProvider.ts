@@ -34,8 +34,7 @@ export class SettingsProvider implements vscode.TreeDataProvider<SettingItem> {
             this.gptModel = model;
             config.update('gptModel', model, vscode.ConfigurationTarget.Global);
         }
-        // Fire the event to refresh the tree view
-        this._onDidChangeTreeData.fire(undefined); // You can pass an argument if needed, e.g., an item or undefined
+        this._onDidChangeTreeData.fire(undefined);
     }
 }
 
@@ -43,7 +42,7 @@ export class SettingItem extends vscode.TreeItem {
     constructor(label: string, public value?: string, collapsibleState?: vscode.TreeItemCollapsibleState) {
         super(label, collapsibleState);
         this.tooltip = label;
-        this.description = value; // Displays value or prompt
+        this.description = value;
         this.command = {
             command: 'extension.editSetting',
             title: 'Edit Setting',

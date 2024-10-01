@@ -76,13 +76,12 @@ export function activate(context: vscode.ExtensionContext) {
     settingsProvider = new SettingsProvider();
     vscode.window.registerTreeDataProvider('codeDocsAISettings', settingsProvider);
 
-    // Command to handle item selection
     context.subscriptions.push(vscode.commands.registerCommand('extension.editSetting', async (item: SettingItem) => {
         const config = vscode.workspace.getConfiguration('code-docs-ai');
         if (item.label === 'API Key') {
             const newApiKey = await vscode.window.showInputBox({ prompt: 'Enter your API Key', value: item.value === 'Enter your API key' ? '' : item.value });
             if (newApiKey !== undefined) {
-                settingsProvider.updateSettings(newApiKey, undefined); // Update only the API Key
+                settingsProvider.updateSettings(newApiKey, undefined);
             }
         } else if (item.label === 'GPT Model') {
             const newModel = await vscode.window.showQuickPick(["gpt-4",
@@ -90,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
                     "gpt-4o-mini",
                     "gpt-4o"], { placeHolder: 'Select a GPT model', canPickMany: false });
             if (newModel) {
-                settingsProvider.updateSettings(undefined, newModel); // Update only the model
+                settingsProvider.updateSettings(undefined, newModel);
             }
         }
     }));
@@ -111,7 +110,7 @@ export function activate(context: vscode.ExtensionContext) {
                     builder.insert(newPosition, `${indentedComment}\n`);
                 });
             } catch (error) {
-                vscode.window.showErrorMessage('Failed to generate a comment. Check the console for more details.');
+                vscode.window.showErrorMessage('Failed to generate a comment. Please enter a valid OpenAI API key in the settings of the Code Docs AI extension. If this does not fix the problem, it is caused by OpenAI; please try again later.');
             }
         }
     });
@@ -149,7 +148,7 @@ export function activate(context: vscode.ExtensionContext) {
                                     builder.insert(newPosition, `${indentedComment}\n`);
                                 });
                             } catch (error) {
-                                vscode.window.showErrorMessage('Failed to generate a comment. Check the console for more details.');
+                                vscode.window.showErrorMessage('Failed to generate a comment. Please enter a valid OpenAI API key in the settings of the Code Docs AI extension. If this does not fix the problem, it is caused by OpenAI; please try again later.');
                             }
                         }
                     }
