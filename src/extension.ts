@@ -4,8 +4,6 @@ import { SettingsProvider, SettingItem } from './SettingsProvider';
 
 let settingsProvider: SettingsProvider;
 
-const apiKey = vscode.workspace.getConfiguration().get('code-docs-ai.apiKey') as string;
-
 let FEW_SHOTS = `For the following prompt take into account these 3 input/output terms, of how a comment should be written:
 Function:
 def elapsed_tid(cls, reference, new):
@@ -164,6 +162,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 async function generateComment(selectedText: string, prompt?: string): Promise<string> {
     try {
+        const apiKey = vscode.workspace.getConfiguration().get('code-docs-ai.apiKey') as string;
         const client = axios.create({
             headers: {
                 Authorization: `Bearer ${apiKey}`,
