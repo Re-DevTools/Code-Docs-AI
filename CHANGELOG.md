@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.0 (2024-10-04)
+
+- feat: sidepanel with GPT model selection and API key input fields
+
 ## v0.1.2 (2024-02-28)
 
 - fix: rename tool
