@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
+import { SettingsProvider, SettingItem } from './SettingsProvider';
 
-const apiKey = vscode.workspace.getConfiguration().get('code-docs-ai.apiKey') as string;
+let settingsProvider: SettingsProvider;
 
 let FEW_SHOTS = `For the following prompt take into account these 3 input/output terms, of how a comment should be written:
 Function:
@@ -59,7 +60,7 @@ Comment:
 
 let DEFAULT_PROMPT = `Generate a comment for the following function:{FUNCTION_CONTENT}. 
 Adhere to the python comment syntax for multiline comments.
-Fill out this given template: 
+Fill out this given template and just return the comment, not the programming language: 
 Brief description of the function.
 
 :param name: Description
@@ -70,6 +71,26 @@ Brief description of the function.
 const originalEditor = vscode.window.activeTextEditor;
 
 export function activate(context: vscode.ExtensionContext) {
+    settingsProvider = new SettingsProvider();
+    vscode.window.registerTreeDataProvider('codeDocsAISettings', settingsProvider);
+
+    context.subscriptions.push(vscode.commands.registerCommand('extension.editSetting', async (item: SettingItem) => {
+        const config = vscode.workspace.getConfiguration('code-docs-ai');
+        if (item.label === 'API Key') {
+            const newApiKey = await vscode.window.showInputBox({ prompt: 'Enter your API Key', value: item.value === 'Enter your API key' ? '' : item.value });
+            if (newApiKey !== undefined) {
+                settingsProvider.updateSettings(newApiKey, undefined);
+            }
+        } else if (item.label === 'GPT Model') {
+            const newModel = await vscode.window.showQuickPick(["gpt-4",
+                    "gpt-4-turbo",
+                    "gpt-4o-mini",
+                    "gpt-4o"], { placeHolder: 'Select a GPT model', canPickMany: false });
+            if (newModel) {
+                settingsProvider.updateSettings(undefined, newModel);
+            }
+        }
+    }));
 
     let generateCommentCmd = vscode.commands.registerCommand('extension.generateComment', async () => {
         const editor = vscode.window.activeTextEditor;
@@ -87,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
                     builder.insert(newPosition, `${indentedComment}\n`);
                 });
             } catch (error) {
-                vscode.window.showErrorMessage('Failed to generate a comment. Check the console for more details.');
+                vscode.window.showErrorMessage('Failed to generate a comment. Please enter a valid OpenAI API key in the settings of the Code Docs AI extension. If this does not fix the problem, it is caused by OpenAI; please try again later.');
             }
         }
     });
@@ -125,7 +146,7 @@ export function activate(context: vscode.ExtensionContext) {
                                     builder.insert(newPosition, `${indentedComment}\n`);
                                 });
                             } catch (error) {
-                                vscode.window.showErrorMessage('Failed to generate a comment. Check the console for more details.');
+                                vscode.window.showErrorMessage('Failed to generate a comment. Please enter a valid OpenAI API key in the settings of the Code Docs AI extension. If this does not fix the problem, it is caused by OpenAI; please try again later.');
                             }
                         }
                     }
@@ -141,14 +162,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 async function generateComment(selectedText: string, prompt?: string): Promise<string> {
     try {
+        const apiKey = vscode.workspace.getConfiguration().get('code-docs-ai.apiKey') as string;
         const client = axios.create({
             headers: {
                 Authorization: `Bearer ${apiKey}`,
             },
         });
 
+        const config = vscode.workspace.getConfiguration('code-docs-ai');
+        const gptModel = config.get<string>('gptModel') || 'gpt-4';
         const params = {
-            model: 'gpt-4',
+            model: gptModel,
             messages: [
                 {
                     role: 'system',
